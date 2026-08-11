@@ -1,0 +1,11 @@
+// Sass-only values: resolved at build time, emit NO CSS of their own.
+// That makes this file safe to `@use` from any number of component files —
+// it costs nothing in the output bundle.
+//
+// Runtime/themeable values live in _theme.scss instead.
+
+// Mobile-first: breakpoints are only ever used with `min-width`, so this is the
+// width at which the desktop layout takes over — not a max for the mobile one.
+$bp-md: 1024px;
+
+$space: 24px;

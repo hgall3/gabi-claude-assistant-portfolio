@@ -1,0 +1,75 @@
+@use '../../styles/variables' as v;
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: v.$space;
+  padding: 16px v.$space;
+  border-bottom: 1px solid var(--color-border);
+
+  &__brand {
+    color: var(--color-heading);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  // Sits above the overlay so the same button also closes it.
+  &__toggle {
+    position: relative;
+    z-index: 11;
+    display: flex;
+    padding: 4px;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  // Mobile default: out of the layout entirely until the toggle opens it,
+  // then it covers the viewport as a centred column.
+  &__links {
+    display: none;
+
+    &.is-open {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: v.$space;
+      background: var(--color-bg);
+    }
+
+    a {
+      padding: 4px 0;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--color-heading);
+      }
+
+      // NavLink adds `active` on its own when the route matches.
+      &.active {
+        color: var(--color-heading);
+        border-bottom-color: currentColor;
+      }
+    }
+  }
+
+  // Desktop: no hamburger, links back to a plain row.
+  @media (min-width: v.$bp-md) {
+    &__toggle {
+      display: none;
+    }
+
+    &__links {
+      display: flex;
+      gap: 20px;
+    }
+  }
+}

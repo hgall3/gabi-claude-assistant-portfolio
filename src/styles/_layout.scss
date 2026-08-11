@@ -1,0 +1,69 @@
+@use 'variables' as v;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+// Flex column so the footer is pushed to the bottom on short pages.
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+main {
+  flex: 1;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+// Visually hidden, but still read by screen readers.
+// Use for text that gives context an icon can't convey on its own.
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Shared page wrapper, used by every route.
+.page {
+  max-width: 1126px;
+  margin: 0 auto;
+  padding: 40px v.$space;
+
+  @media (min-width: v.$bp-md) {
+    padding: 64px v.$space;
+  }
+}
+
+// Set by the Navbar while the mobile menu is open, so the page underneath
+// the overlay can't scroll away behind it.
+body.is-menu-open {
+  overflow: hidden;
+}

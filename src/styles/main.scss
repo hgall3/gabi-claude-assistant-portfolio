@@ -1,0 +1,5 @@
+// Entry point for global styles. Imported once, at the top of App.jsx.
+// Order matters: tokens first, then base styles that consume them.
+@use 'theme';
+@use 'typography';
+@use 'layout';

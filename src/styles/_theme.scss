@@ -1,0 +1,23 @@
+// Design tokens as CSS custom properties, so they can respond to dark mode.
+// (Sass variables can't — they're resolved at build time, before any media query.)
+//
+// This file EMITS CSS, so it must be used exactly once: only main.scss pulls it in.
+// Component .scss files never need it — custom properties resolve at runtime and
+// are globally available, so `var(--color-border)` just works anywhere.
+
+:root {
+  --color-text: #6b6375;
+  --color-heading: #08060d;
+  --color-bg: #fff;
+  --color-border: rgba(128, 128, 128, 0.3);
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #9ca3af;
+    --color-heading: #f3f4f6;
+    --color-bg: #16171d;
+  }
+}
