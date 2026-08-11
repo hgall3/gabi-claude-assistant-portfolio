@@ -42,6 +42,19 @@ globally available, so `var(--color-border)` just works anywhere.
 
 Use the existing tokens rather than hardcoding colors or spacing.
 
+Typography is set globally in `_typography.scss` — Playfair Display for `h1`–`h3`,
+Work Sans for `h4`–`h6` and body copy. Sizes are `rem` (never `px`, which ignores
+the user's browser font-size setting) and line heights are unitless ratios so they
+hold when a size steps up at the breakpoint. Components should rely on the base
+element styles rather than restating font sizes.
+
+Fonts are **self-hosted** through [`@fontsource`](https://fontsource.org) packages,
+never loaded from a CDN — a Google Fonts `<link>` would expose every visitor to a
+third-party request. Each weight is imported individually at the top of `App.jsx`
+(`@fontsource/work-sans/latin-600.css`), so a weight used in SCSS without a
+matching import there renders as a browser-synthesised approximation rather than
+the real cut. Add the import alongside any new weight.
+
 Layout is **mobile-first**: breakpoints are only ever used with `min-width`, so
 `$bp-md: 1024px` is the width at which the desktop layout takes over, not a
 ceiling for the mobile one.
