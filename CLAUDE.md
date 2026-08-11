@@ -42,6 +42,13 @@ globally available, so `var(--color-border)` just works anywhere.
 
 Use the existing tokens rather than hardcoding colors or spacing.
 
+Typography is set globally in `_typography.scss` — Playfair Display for `h1`–`h3`,
+Work Sans for `h4`–`h6` and body copy, loaded via `<link>` in `index.html`.
+Sizes are `rem` (never `px`, which ignores the user's browser font-size setting)
+and line heights are unitless ratios so they hold when a size steps up at the
+breakpoint. Components should rely on the base element styles rather than
+restating font sizes.
+
 Layout is **mobile-first**: breakpoints are only ever used with `min-width`, so
 `$bp-md: 1024px` is the width at which the desktop layout takes over, not a
 ceiling for the mobile one.

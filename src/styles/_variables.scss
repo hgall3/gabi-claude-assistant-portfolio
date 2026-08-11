@@ -9,3 +9,9 @@
 $bp-md: 1024px;
 
 $space: 24px;
+
+// Type families. Loaded via <link> in index.html.
+// The fallbacks matter: with display=swap the browser paints these first, so a
+// serif fallback for the serif face keeps the swap from visibly reflowing.
+$font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+$font-body: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
