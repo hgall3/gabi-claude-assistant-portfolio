@@ -1,0 +1,7 @@
+# Nothing here is private, so every crawler gets the whole site. The line that
+# earns this file its place is the last one: it tells a crawler where the
+# sitemap is without waiting for it to guess.
+User-agent: *
+Allow: /
+
+Sitemap: https://juandiegoperezarias.netlify.app/sitemap.xml

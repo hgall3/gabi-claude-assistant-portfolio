@@ -140,6 +140,25 @@ must not be duplicated as a `public/_redirects` file.
 **Planned, not yet built:** the Netlify site is not connected to the repository
 yet, so nothing deploys on push so far.
 
+## Search engines
+
+The canonical origin is `https://juandiegoperezarias.netlify.app`, the Netlify
+subdomain. **Planned, not yet built:** a custom domain. Attaching one means
+rewriting every `<loc>` in `sitemap.xml` and the `Sitemap:` line in
+`robots.txt` — a sitemap that lists a different host than the one serving it
+is ignored outright.
+
+`robots.txt` and `sitemap.xml` live in `public/`, which Vite copies to the root of
+`dist/` untouched. They resolve in production because Netlify serves a real file
+before it applies the SPA rewrite, so the catch-all never swallows them.
+
+The sitemap lists every indexable route as an absolute URL, which the sitemap
+spec requires — a relative path in it is silently ignored. It is maintained by
+hand, so **a new route needs a `<url>` entry** alongside its addition to
+`main.jsx` and to the `links` array in `Navbar.jsx`. It deliberately carries no
+`<lastmod>`, `<changefreq>` or `<priority>`: the first goes stale into a lie, and
+Google ignores the other two.
+
 ## Git workflow
 
 Never commit to `main`. Branch off `dev` using `<type>/<short-description>`
