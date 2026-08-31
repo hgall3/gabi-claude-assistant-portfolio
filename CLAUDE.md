@@ -137,8 +137,14 @@ Routing is client-side, so `netlify.toml` rewrites every path that isn't a real
 file to `index.html`. New routes therefore need no deploy change, and the rule
 must not be duplicated as a `public/_redirects` file.
 
-**Planned, not yet built:** the Netlify site is not connected to the repository
-yet, so nothing deploys on push so far.
+**Not yet built:** the Netlify project exists and is live at
+`juandiegoperezarias.netlify.app`, but it is **not connected to this repository**.
+The deploy currently online was uploaded by hand, so it is a frozen snapshot that
+does not change when you push — and there are no branch or pull request previews,
+because those only exist for a repo-linked project. Connecting it is a browser
+step in Netlify (Site configuration → Build & deploy → Link repository); the build
+command and publish directory come from `netlify.toml` and should be left blank
+there.
 
 ## Search engines
 
