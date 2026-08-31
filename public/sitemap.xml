@@ -3,6 +3,10 @@
   Every route the site wants indexed. The 404 page is deliberately absent: it
   has no real path, and listing it would invite crawlers to index an error page.
 
+  The origin is the Netlify subdomain because no custom domain is registered
+  yet. Every <loc> below has to be rewritten the day one is attached — a
+  sitemap listing a different host than the one serving it is ignored.
+
   URLs are absolute because the sitemap spec requires it — a relative path here
   is silently ignored. Kept in sync by hand, so a new route in main.jsx needs a
   matching <url> below.
@@ -14,30 +18,30 @@
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://juandiegoperezarias.com/</loc>
+    <loc>https://juandiegoperezarias.netlify.app/</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/biografia</loc>
+    <loc>https://juandiegoperezarias.netlify.app/biografia</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/foto-galeria</loc>
+    <loc>https://juandiegoperezarias.netlify.app/foto-galeria</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/foto-ensayo</loc>
+    <loc>https://juandiegoperezarias.netlify.app/foto-ensayo</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/libros</loc>
+    <loc>https://juandiegoperezarias.netlify.app/libros</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/videos</loc>
+    <loc>https://juandiegoperezarias.netlify.app/videos</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/exposiciones</loc>
+    <loc>https://juandiegoperezarias.netlify.app/exposiciones</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/historias</loc>
+    <loc>https://juandiegoperezarias.netlify.app/historias</loc>
   </url>
   <url>
-    <loc>https://juandiegoperezarias.com/contacto</loc>
+    <loc>https://juandiegoperezarias.netlify.app/contacto</loc>
   </url>
 </urlset>

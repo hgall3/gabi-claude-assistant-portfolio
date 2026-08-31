@@ -142,7 +142,11 @@ yet, so nothing deploys on push so far.
 
 ## Search engines
 
-The canonical origin is `https://juandiegoperezarias.com` — no `www`.
+The canonical origin is `https://juandiegoperezarias.netlify.app`, the Netlify
+subdomain. **Planned, not yet built:** a custom domain. Attaching one means
+rewriting every `<loc>` in `sitemap.xml` and the `Sitemap:` line in
+`robots.txt` — a sitemap that lists a different host than the one serving it
+is ignored outright.
 
 `robots.txt` and `sitemap.xml` live in `public/`, which Vite copies to the root of
 `dist/` untouched. They resolve in production because Netlify serves a real file
