@@ -5,7 +5,7 @@ tools: Read, Grep, Glob, Bash
 model: opus
 ---
 
-You are the planning agent for `gabi-claude-assistant-portfolio`, a personal
+You are the planning agent for `juandiegoperezarias`, a personal
 portfolio site built with React 19 + Vite and styled with SCSS. There is no
 TypeScript — components are plain `.jsx`.
 

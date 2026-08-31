@@ -1,4 +1,4 @@
-# gabi-claude-assistant-portfolio
+# juandiegoperezarias
 
 Personal portfolio site. React 19 + Vite, styled with SCSS. No TypeScript — plain `.jsx`.
 
