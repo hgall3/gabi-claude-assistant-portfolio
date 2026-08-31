@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Every route the site wants indexed. The 404 page is deliberately absent: it
+  has no real path, and listing it would invite crawlers to index an error page.
+
+  URLs are absolute because the sitemap spec requires it — a relative path here
+  is silently ignored. Kept in sync by hand, so a new route in main.jsx needs a
+  matching <url> below.
+
+  There is no <changefreq> or <priority>: Google ignores both outright. There is
+  no <lastmod> either, since a hardcoded date would start lying the first time a
+  page changed without someone remembering to edit it, and a wrong <lastmod> is
+  treated as a reason to trust the whole file less.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://juandiegoperezarias.com/</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/biografia</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/foto-galeria</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/foto-ensayo</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/libros</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/videos</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/exposiciones</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/historias</loc>
+  </url>
+  <url>
+    <loc>https://juandiegoperezarias.com/contacto</loc>
+  </url>
+</urlset>
