@@ -11,7 +11,7 @@ const socials = [
 function Footer() {
   return (
     <footer className="footer">
-      <p className="footer__copy">© {new Date().getFullYear()} My Site</p>
+      <p className="footer__copy">© {new Date().getFullYear()} Juan Diego Perez Arias</p>
 
       <ul className="footer__socials">
         {socials.map(({ name, url, Icon }) => (
@@ -19,7 +19,7 @@ function Footer() {
             <a href={url} target="_blank" rel="noreferrer" title={name}>
               {/* The icon is decorative; the .sr-only text is what gets announced */}
               <Icon aria-hidden="true" />
-              <span className="sr-only">{name} (opens in a new tab)</span>
+              <span className="sr-only">{name} (se abre en una pestaña nueva)</span>
             </a>
           </li>
         ))}

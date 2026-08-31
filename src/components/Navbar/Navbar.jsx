@@ -6,10 +6,15 @@ import './Navbar.scss'
 // One source of links for both the mobile overlay and the desktop row.
 // `end` stops "/" matching every route, since all paths start with "/".
 const links = [
-  { to: '/', label: 'Home', end: true },
-  { to: '/blog', label: 'Blog' },
-  { to: '/about', label: 'About' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/', label: 'Inicio', end: true },
+  { to: '/biografia', label: 'Biografía' },
+  { to: '/foto-galeria', label: 'Foto Galería' },
+  { to: '/foto-ensayo', label: 'Foto Ensayo' },
+  { to: '/libros', label: 'Libros' },
+  { to: '/videos', label: 'Videos' },
+  { to: '/exposiciones', label: 'Exposiciones' },
+  { to: '/historias', label: 'Historias' },
+  { to: '/contacto', label: 'Contacto' },
 ]
 
 function Navbar() {
@@ -34,7 +39,7 @@ function Navbar() {
   return (
     <header className="navbar">
       <NavLink to="/" className="navbar__brand" end>
-        My Site
+        Juan Diego Perez Arias
       </NavLink>
 
       <button
@@ -46,7 +51,7 @@ function Navbar() {
       >
         {/* The icon is decorative; the .sr-only text is what gets announced */}
         {open ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
-        <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
+        <span className="sr-only">{open ? 'Cerrar menú' : 'Abrir menú'}</span>
       </button>
 
       <nav id="primary-nav" className={`navbar__links${open ? ' is-open' : ''}`}>
