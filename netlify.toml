@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The app uses client-side routing, so a path like /about exists only in the
+# browser — there is no about.html in the build output. Serve index.html for
+# anything that isn't a real file and let the router read the URL, otherwise a
+# direct visit or a refresh on a sub-route would 404. Status 200 makes this a
+# rewrite rather than a redirect, so the address bar keeps the original path.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

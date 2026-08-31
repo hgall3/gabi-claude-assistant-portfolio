@@ -72,6 +72,20 @@ working baseline, not a finished system.
 `main.scss` is imported once, at the top of `App.jsx`. Its `@use` order matters:
 tokens first, then base styles that consume them.
 
+## Deployment
+
+Netlify, configured by `netlify.toml` in the repo root rather than through the
+Netlify dashboard, so deploy settings are version-controlled and reviewable in a
+pull request. Production builds from `main`; `dev` and open pull requests each
+get their own preview URL.
+
+Routing is client-side, so `netlify.toml` rewrites every path that isn't a real
+file to `index.html`. New routes therefore need no deploy change, and the rule
+must not be duplicated as a `public/_redirects` file.
+
+**Planned, not yet built:** the Netlify site is not connected to the repository
+yet, so nothing deploys on push so far.
+
 ## Git workflow
 
 Never commit to `main`. Branch off `dev` using `<type>/<short-description>`
