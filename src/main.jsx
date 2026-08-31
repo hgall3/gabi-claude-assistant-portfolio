@@ -6,6 +6,7 @@ import Home from './pages/Home/Home.jsx'
 import Blog from './pages/Blog/Blog.jsx'
 import About from './pages/About/About.jsx'
 import Contact from './pages/Contact/Contact.jsx'
+import NotFound from './pages/NotFound/NotFound.jsx'
 
 // App is the layout every route renders inside of, via <Outlet />.
 const router = createBrowserRouter([
@@ -17,6 +18,9 @@ const router = createBrowserRouter([
       { path: 'blog', element: <Blog /> },
       { path: 'about', element: <About /> },
       { path: 'contact', element: <Contact /> },
+      // Catch-all, kept last. Sits inside the layout rather than replacing it,
+      // so a visitor who lands on a bad URL still has the navbar to leave by.
+      { path: '*', element: <NotFound /> },
     ],
   },
 ])

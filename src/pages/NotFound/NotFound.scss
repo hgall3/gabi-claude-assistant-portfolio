@@ -1,0 +1,26 @@
+@use '../../styles/variables' as v;
+
+// Sizes come from the global type scale — the metadata line borrows .text-small
+// and the heading is a plain h1 — so nothing here restates a font size.
+.not-found {
+  text-align: center;
+
+  &__code {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__message {
+    // ch rather than px: the measure tracks the font size, so the line stays
+    // readable when the type steps up at the desktop breakpoint.
+    max-width: 46ch;
+    margin: v.$space * 0.5 auto v.$space;
+  }
+
+  &__home {
+    // The base `a` rule sets `color: inherit`, which would leave this the same
+    // muted body color as the sentence above it.
+    color: var(--color-heading);
+    text-underline-offset: 0.2em;
+  }
+}
