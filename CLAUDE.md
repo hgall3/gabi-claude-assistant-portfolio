@@ -40,6 +40,11 @@ Component `.scss` files must never `@use 'theme'` — that would duplicate the
 custom property block in the bundle. Custom properties resolve at runtime and are
 globally available, so `var(--color-border)` just works anywhere.
 
+A component reaches the Sass variables by relative path —
+`@use '../../styles/variables' as v;`. The bare `@use 'variables'` that
+`main.scss` uses only resolves because that file already sits inside
+`src/styles/`; from a page or component folder it fails the build.
+
 Use the existing tokens rather than hardcoding colors or spacing.
 
 Typography is set globally in `_typography.scss` — Playfair Display for `h1`–`h3`,
