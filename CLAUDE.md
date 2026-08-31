@@ -17,6 +17,7 @@ npm run preview  # serve the production build locally
 src/pages/<Name>/       Route-level views (Home, About, Blog, Contact)
 src/components/<Name>/  Reusable UI (Navbar, Footer)
 src/styles/             Global SCSS partials
+src/hooks/              Shared hooks, one `.js` file each (no folder, no styles)
 ```
 
 Every page and component lives in its own folder holding a matching `.jsx` and
@@ -76,6 +77,21 @@ working baseline, not a finished system.
 
 `main.scss` is imported once, at the top of `App.jsx`. Its `@use` order matters:
 tokens first, then base styles that consume them.
+
+## Page metadata
+
+The site is in Spanish — `<html lang="es">`, and page copy and metadata are
+written in Spanish.
+
+Every page calls `usePageMeta(title, description)` as its first statement, so no
+two routes share a title or a description. Add the call to any new page.
+
+`index.html` holds the site-level title and description. Nothing is prerendered,
+so those static tags are all a crawler or social scraper that doesn't run JS ever
+sees; `usePageMeta` rewrites them in place once React mounts. Don't render React
+19's native `<title>` or `<meta>` from a component — React appends rather than
+replaces, so the document would end up with two of each, which its own docs call
+undefined behavior.
 
 ## Deployment
 
