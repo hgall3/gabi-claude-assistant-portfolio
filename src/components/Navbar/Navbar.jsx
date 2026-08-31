@@ -54,7 +54,10 @@ function Navbar() {
         <span className="sr-only">{open ? 'Cerrar menú' : 'Abrir menú'}</span>
       </button>
 
-      <nav id="primary-nav" className={`navbar__links${open ? ' is-open' : ''}`}>
+      <nav
+        id="primary-nav"
+        className={`navbar__links${open ? ' is-open' : ''}`}
+      >
         {links.map(({ to, label, end }) => (
           // Navigating doesn't unmount the overlay, so each link closes it itself.
           <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}>

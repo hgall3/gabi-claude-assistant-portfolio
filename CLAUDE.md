@@ -97,18 +97,18 @@ unaccented spelling is deliberate, so don't add the accent even in Spanish copy.
 
 ## Routes
 
-| Path | Component | Nav label |
-| --- | --- | --- |
-| `/` | `Home` | Inicio |
-| `/biografia` | `Biography` | Biografía |
+| Path            | Component      | Nav label    |
+| --------------- | -------------- | ------------ |
+| `/`             | `Home`         | Inicio       |
+| `/biografia`    | `Biography`    | Biografía    |
 | `/foto-galeria` | `PhotoGallery` | Foto Galería |
-| `/foto-ensayo` | `PhotoEssay` | Foto Ensayo |
-| `/libros` | `Books` | Libros |
-| `/videos` | `Videos` | Videos |
-| `/exposiciones` | `Exhibitions` | Exposiciones |
-| `/historias` | `Stories` | Historias |
-| `/contacto` | `Contact` | Contacto |
-| `*` | `NotFound` | — |
+| `/foto-ensayo`  | `PhotoEssay`   | Foto Ensayo  |
+| `/libros`       | `Books`        | Libros       |
+| `/videos`       | `Videos`       | Videos       |
+| `/exposiciones` | `Exhibitions`  | Exposiciones |
+| `/historias`    | `Stories`      | Historias    |
+| `/contacto`     | `Contact`      | Contacto     |
+| `*`             | `NotFound`     | —            |
 
 `Navbar.jsx` holds one `links` array feeding both the desktop row and the mobile
 overlay, so a new route is added to the nav in one place. All nine links sit at
@@ -164,6 +164,23 @@ hand, so **a new route needs a `<url>` entry** alongside its addition to
 `main.jsx` and to the `links` array in `Navbar.jsx`. It deliberately carries no
 `<lastmod>`, `<changefreq>` or `<priority>`: the first goes stale into a lie, and
 Google ignores the other two.
+
+## Formatting
+
+Prettier owns formatting; ESLint owns correctness. The two are kept from fighting
+by `eslint-config-prettier`, which sits **last** in `eslint.config.js` and
+switches off every ESLint rule that overlaps with Prettier. Don't add stylistic
+rules to ESLint — they belong in `.prettierrc` or nowhere.
+
+```bash
+npm run format        # rewrite every file in place
+npm run format:check  # report without writing
+```
+
+`.prettierrc` encodes the style the codebase already used rather than imposing a
+new one: no semicolons, single quotes in JS and double in JSX, trailing commas,
+two-space indent, 80 columns. Formatting is never a review discussion — run
+`npm run format` and let the tool decide.
 
 ## Git workflow
 
