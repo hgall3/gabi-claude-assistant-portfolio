@@ -130,21 +130,21 @@ undefined behavior.
 
 Netlify, configured by `netlify.toml` in the repo root rather than through the
 Netlify dashboard, so deploy settings are version-controlled and reviewable in a
-pull request. Production builds from `main`; `dev` and open pull requests each
-get their own preview URL.
+pull request. The project is connected to this repository and builds `main`
+automatically on every push, publishing to `juandiegoperezarias.netlify.app`.
 
 Routing is client-side, so `netlify.toml` rewrites every path that isn't a real
 file to `index.html`. New routes therefore need no deploy change, and the rule
 must not be duplicated as a `public/_redirects` file.
 
-**Not yet built:** the Netlify project exists and is live at
-`juandiegoperezarias.netlify.app`, but it is **not connected to this repository**.
-The deploy currently online was uploaded by hand, so it is a frozen snapshot that
-does not change when you push — and there are no branch or pull request previews,
-because those only exist for a repo-linked project. Connecting it is a browser
-step in Netlify (Site configuration → Build & deploy → Link repository); the build
-command and publish directory come from `netlify.toml` and should be left blank
-there.
+**Not enabled:** branch deploys and deploy previews. `dev` and open pull requests
+get no preview URL of their own — `dev--…netlify.app` and
+`deploy-preview-<n>--…netlify.app` both 404 — so a change is only visible online
+once it is promoted to `main`. Turning them on is a browser step in Netlify, not
+something `netlify.toml` controls.
+
+**Planned, not yet built:** a custom domain. The `.netlify.app` subdomain is
+currently the canonical origin.
 
 ## Search engines
 
