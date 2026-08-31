@@ -15,14 +15,14 @@ function NotFound() {
     <section className="page not-found">
       <p className="not-found__code text-small">Error 404</p>
 
-      <h1>Page not found</h1>
+      <h1>Página no encontrada</h1>
 
       <p className="not-found__message">
-        The page you were looking for doesn&rsquo;t exist, or it may have moved.
+        La página que buscas no existe, o puede haber cambiado de dirección.
       </p>
 
       <Link to="/" className="not-found__home">
-        Back to home
+        Volver al inicio
       </Link>
     </section>
   )

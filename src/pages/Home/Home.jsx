@@ -9,10 +9,10 @@ function Home() {
 
   return (
     <section className="page home">
-      <h1>Home</h1>
+      <h1>Inicio</h1>
 
       {/* Hero */}
-      {/* Features */}
+      {/* Featured work */}
     </section>
   )
 }

@@ -14,7 +14,7 @@ npm run preview  # serve the production build locally
 ## Structure
 
 ```
-src/pages/<Name>/       Route-level views (Home, About, Blog, Contact)
+src/pages/<Name>/       Route-level views (see the route table below)
 src/components/<Name>/  Reusable UI (Navbar, Footer)
 src/styles/             Global SCSS partials
 src/hooks/              Shared hooks, one `.js` file each (no folder, no styles)
@@ -78,10 +78,43 @@ working baseline, not a finished system.
 `main.scss` is imported once, at the top of `App.jsx`. Its `@use` order matters:
 tokens first, then base styles that consume them.
 
-## Page metadata
+## Language
 
-The site is in Spanish — `<html lang="es">`, and page copy and metadata are
-written in Spanish.
+The site is Spanish; the code is English. Every string a visitor can read is in
+Spanish — headings, nav labels, body copy, page titles, meta descriptions, and
+`.sr-only` text meant for screen readers. Everything a developer reads stays in
+English: folder names, component names, variables, CSS class names and comments.
+So the page whose heading reads "Biografía" is `pages/Biography/Biography.jsx`
+styling `.biography`, and the two are not expected to match.
+
+URL paths are the exception that follows the copy, not the code, because the
+visitor reads them: `/biografia`, not `/about`. Slugs are unaccented and
+hyphenated (`/foto-galeria`) — an accent or `ñ` in a URL gets percent-escaped and
+turns unreadable the moment it is copied or shared.
+
+The name is written **Perez, never Pérez**, everywhere in the project. The
+unaccented spelling is deliberate, so don't add the accent even in Spanish copy.
+
+## Routes
+
+| Path | Component | Nav label |
+| --- | --- | --- |
+| `/` | `Home` | Inicio |
+| `/biografia` | `Biography` | Biografía |
+| `/foto-galeria` | `PhotoGallery` | Foto Galería |
+| `/foto-ensayo` | `PhotoEssay` | Foto Ensayo |
+| `/libros` | `Books` | Libros |
+| `/videos` | `Videos` | Videos |
+| `/exposiciones` | `Exhibitions` | Exposiciones |
+| `/historias` | `Stories` | Historias |
+| `/contacto` | `Contact` | Contacto |
+| `*` | `NotFound` | — |
+
+`Navbar.jsx` holds one `links` array feeding both the desktop row and the mobile
+overlay, so a new route is added to the nav in one place. All nine links sit at
+the top level; there is no dropdown.
+
+## Page metadata
 
 Every page calls `usePageMeta(title, description)` as its first statement, so no
 two routes share a title or a description. Add the call to any new page.
