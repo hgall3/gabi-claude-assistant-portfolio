@@ -289,14 +289,14 @@
     padding: 0 0 18px;
   }
 
-  &__mobile-foot {
+  &__mobile-mark {
     display: flex;
     justify-content: center;
-    padding-top: 8px;
+    padding-bottom: 8px;
   }
 
-  // Deliberately larger than the bar's signature: down here it is the panel's
-  // closing gesture, not a piece of navigation furniture.
+  // Deliberately larger than the bar's signature: heading the panel it is the
+  // composition, not a piece of navigation furniture.
   &__mark {
     // Sized by width rather than height: the mark is two and a half times wider
     // than it is tall, so width is what decides whether it fits the phone.

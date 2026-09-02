@@ -316,6 +316,12 @@ function Navbar() {
             </button>
           </div>
 
+          {/* Heads the panel, above the sections. Still a link: with Inicio
+              absent from the menu, this is the only way home from here. */}
+          <Link to="/" className="navbar__mobile-mark" onClick={closeAll}>
+            <Signature className="navbar__mark" />
+          </Link>
+
           <nav className="navbar__mobile-nav" aria-label="Principal">
             {menus.map((menu) => {
               const expanded = openSection === menu.id
@@ -366,16 +372,6 @@ function Navbar() {
             })}
           </nav>
 
-          {/* The mark closes the panel as a piece of composition rather than
-              as a header. Still a link: with Inicio absent from the menu, this
-              is the only way home from a full-screen mobile panel. */}
-          <Link
-            to="/"
-            className="navbar__mobile-foot"
-            onClick={closeAll}
-          >
-            <Signature className="navbar__mark" />
-          </Link>
         </div>
       )}
     </>
