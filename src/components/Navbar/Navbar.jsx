@@ -10,9 +10,6 @@ const SHRINK_AFTER = 40 // px before the signature steps down in size
 
 const COLUMN_ROWS = 3
 
-// How many entries a section shows on mobile before handing off to its page.
-const MOBILE_PREVIEW = 2
-
 // Split a list into columns of three that are laid out independently.
 //
 // One grid with `grid-template-rows: repeat(3, auto)` would be shorter, but its
@@ -361,19 +358,17 @@ function Navbar() {
                               <span>{group.heading}</span>
                             </Link>
                           ))
-                        : // A phone shows a taste of the section and then
-                          // hands off to its page, rather than making someone
-                          // scroll seven books inside a menu.
-                          menu.featured.items
-                            .slice(0, MOBILE_PREVIEW)
-                            .map((item) => (
-                              <PanelItem
-                                key={item.label}
-                                item={item}
-                                onNavigate={closeAll}
-                              />
-                            ))}
+                        : menu.featured.items.map((item) => (
+                            <PanelItem
+                              key={item.label}
+                              item={item}
+                              onNavigate={closeAll}
+                            />
+                          ))}
 
+                      {/* Kept below the full list: every entry above it is a
+                          page that doesn't exist yet, so this is the only thing
+                          in the section a visitor can actually follow. */}
                       {menu.layout === 'featured' && menu.featured.to && (
                         <Link
                           to={menu.featured.to}
