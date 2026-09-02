@@ -241,6 +241,7 @@
     .navbar__item {
       padding: 2px 0;
       font-size: 1.125rem;
+      text-align: center;
     }
 
     .navbar__subtitle {
@@ -248,16 +249,17 @@
     }
   }
 
+  // Only the close button lives here now that the mark has moved to the foot.
   &__mobile-head {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   &__mobile-nav {
     display: flex;
     flex: 1;
     flex-direction: column;
+    text-align: center;
   }
 
   &__accordion {
@@ -266,6 +268,7 @@
 
   &__accordion-trigger {
     display: flex;
+    justify-content: center;
     width: 100%;
     padding: 14px 0;
     font-family: v.$font-body;
@@ -281,37 +284,24 @@
   &__sub {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
     padding: 0 0 18px;
   }
 
   &__mobile-foot {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: center;
+    padding-top: 8px;
   }
 
-  &__socials {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 6px;
-    list-style: none;
-
-    a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      font-size: 1.25rem;
-      color: inherit;
-    }
-  }
-
-  &__contact {
-    color: inherit;
-    text-decoration: none;
-    opacity: 0.45;
+  // Deliberately larger than the bar's signature: down here it is the panel's
+  // closing gesture, not a piece of navigation furniture.
+  &__mark {
+    // Sized by width rather than height: the mark is two and a half times wider
+    // than it is tall, so width is what decides whether it fits the phone.
+    width: min(62vw, 260px);
+    height: auto;
   }
 
   // ---- Shared states ------------------------------------------------------

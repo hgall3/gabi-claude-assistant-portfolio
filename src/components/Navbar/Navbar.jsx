@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { FaLinkedin, FaYoutube } from 'react-icons/fa'
-import { menus, contact, socials } from './navigation.jsx'
+import { menus } from './navigation.jsx'
 import Signature from '../Signature/Signature.jsx'
 import './Navbar.scss'
 
@@ -307,10 +306,6 @@ function Navbar() {
       {mobileOpen && (
         <div id="nav-mobile" className="navbar__mobile">
           <div className="navbar__mobile-head">
-            <Link to="/" className="navbar__brand" onClick={closeAll}>
-              <Signature className="navbar__signature" />
-            </Link>
-
             <button
               type="button"
               className="navbar__close"
@@ -371,32 +366,16 @@ function Navbar() {
             })}
           </nav>
 
-          <div className="navbar__mobile-foot">
-            <ul className="navbar__socials">
-              {socials.map(({ name, url }) => (
-                <li key={name}>
-                  <a href={url} target="_blank" rel="noreferrer">
-                    {/* The icon is decorative; the .sr-only text is what gets announced */}
-                    {name === 'LinkedIn' ? (
-                      <FaLinkedin aria-hidden="true" />
-                    ) : (
-                      <FaYoutube aria-hidden="true" />
-                    )}
-                    <span className="sr-only">
-                      {name} (se abre en una pestaña nueva)
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <a href={`mailto:${contact.email}`} className="navbar__contact">
-              {contact.email}
-            </a>
-            <a href={`tel:${contact.phoneHref}`} className="navbar__contact">
-              {contact.phone}
-            </a>
-          </div>
+          {/* The mark closes the panel as a piece of composition rather than
+              as a header. Still a link: with Inicio absent from the menu, this
+              is the only way home from a full-screen mobile panel. */}
+          <Link
+            to="/"
+            className="navbar__mobile-foot"
+            onClick={closeAll}
+          >
+            <Signature className="navbar__mark" />
+          </Link>
         </div>
       )}
     </>

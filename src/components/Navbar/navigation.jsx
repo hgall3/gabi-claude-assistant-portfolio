@@ -118,22 +118,3 @@ export const menus = [
     },
   },
 ]
-
-// Shown at the foot of the mobile panel only.
-export const contact = {
-  email: 'jdiegoperezarias@gmail.com',
-  phone: '+593 99 814 7056',
-  // tel: links can't contain spaces.
-  phoneHref: '+593998147056',
-}
-
-export const socials = [
-  {
-    name: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/juan-diego-p%C3%A9rez-arias-697a1754/',
-  },
-  {
-    name: 'YouTube',
-    url: 'https://www.youtube.com/channel/UCUnv5Bm-HMRDcSBaeXeDhHA',
-  },
-]
