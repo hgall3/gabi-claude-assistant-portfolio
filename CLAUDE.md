@@ -127,6 +127,14 @@ else. Those future paths nest under their section —
 The navbar switches from its full-screen mobile panel to the desktop row at
 `$bp-sm: 768px`, not `$bp-md`.
 
+The signature wordmark is `components/Signature/`, an inlined `<svg>` rather than
+an `<img>`. That is deliberate: an external image can't inherit CSS, so
+`fill: currentColor` only works inline. It means the mark takes the colour of
+whatever contains it — ink on the light page, white in dark mode, flipped again
+inside the inverted mobile panel — with no filter, no second file and no
+theme-specific token. Do the same for any future mark that has to follow the
+theme.
+
 ## Page metadata
 
 Every page calls `usePageMeta(title, description)` as its first statement, so no

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { FaLinkedin, FaYoutube } from 'react-icons/fa'
 import { menus, contact, socials } from './navigation.js'
-import signature from '../../assets/signature.png'
+import Signature from '../Signature/Signature.jsx'
 import './Navbar.scss'
 
 // Scroll distances that drive the bar's two behaviours.
@@ -166,11 +166,7 @@ function Navbar() {
       >
         <div className="navbar__bar">
           <Link to="/" className="navbar__brand" onClick={closeAll}>
-            <img
-              src={signature}
-              className="navbar__signature"
-              alt="Juan Diego Perez Arias"
-            />
+            <Signature className="navbar__signature" />
           </Link>
 
           <nav className="navbar__nav" aria-label="Principal">
@@ -285,11 +281,7 @@ function Navbar() {
         <div id="nav-mobile" className="navbar__mobile">
           <div className="navbar__mobile-head">
             <Link to="/" className="navbar__brand" onClick={closeAll}>
-              <img
-                src={signature}
-                className="navbar__signature"
-                alt="Juan Diego Perez Arias"
-              />
+              <Signature className="navbar__signature" />
             </Link>
 
             <button

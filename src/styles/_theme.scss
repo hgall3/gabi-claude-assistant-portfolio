@@ -11,11 +11,6 @@
   --color-bg: #fff;
   --color-border: rgba(128, 128, 128, 0.3);
 
-  // The signature is a bitmap, so it can't take `fill: currentColor` the way a
-  // vector mark would. Inverting it is how it follows the theme instead: 0
-  // leaves it black for a light page, 1 turns it white for a dark one.
-  --signature-invert: 0;
-
   color-scheme: light dark;
 }
 
@@ -24,6 +19,5 @@
     --color-text: #9ca3af;
     --color-heading: #f3f4f6;
     --color-bg: #16171d;
-    --signature-invert: 1;
   }
 }

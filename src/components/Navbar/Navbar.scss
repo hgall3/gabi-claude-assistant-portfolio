@@ -56,14 +56,15 @@
 
   &__brand {
     display: flex;
+    // The mark is `fill: currentColor`, and `a` inherits the muted body colour.
+    // Anchor it to the ink so the signature is black, not grey-purple.
+    color: var(--color-heading);
     text-decoration: none;
   }
 
   &__signature {
     width: auto;
     height: 46px;
-    // A bitmap can't take currentColor, so the theme flips it instead.
-    filter: invert(var(--signature-invert));
     transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 
     @media (min-width: v.$bp-sm) {
@@ -236,18 +237,14 @@
     // so dark mode inverts with it.
     color: var(--color-bg);
     background: var(--color-heading);
-    // And the signature has to flip the opposite way to the page it sits over.
-    --signature-invert: 1;
-
-    @media (prefers-color-scheme: dark) {
-      --signature-invert: 0;
-    }
 
     @media (min-width: v.$bp-sm) {
       display: none;
     }
 
-    // Everything inside inherits the inverted ink.
+    // Everything inside inherits the inverted ink — the signature included, which
+    // is why it needs no dark-mode handling of its own.
+    .navbar__brand,
     .navbar__item,
     .navbar__see-all,
     .navbar__heading {
