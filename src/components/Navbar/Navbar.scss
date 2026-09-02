@@ -142,6 +142,12 @@
 
   // Full width beneath the bar rather than a floating card.
   &__panel {
+    display: grid;
+    // The lead column is a fixed width rather than content-width, so the content
+    // column starts at the same x in every panel whether or not there is a
+    // see-all link to put in it.
+    grid-template-columns: 220px 1fr;
+    align-items: start;
     padding: 30px v.$space 32px;
 
     @include surface;
@@ -153,46 +159,38 @@
 
   &__columns {
     display: flex;
+    align-items: start;
     gap: 72px;
   }
 
-  // See-all on the left, the highlighted list on the right.
-  &__featured {
+  // One column of entries, spaced evenly. Independent of its neighbours, so a
+  // wrapped subtitle in the next column can't stretch the rhythm here.
+  &__column {
     display: flex;
-    gap: 72px;
-    align-items: start;
+    flex-direction: column;
+    gap: 14px;
   }
 
   &__heading {
+    // Block, not inline: an inline-block heading sits on a text baseline and
+    // carries the line's descender space, which pushed the two linked headings
+    // in Obra below the plain one beside them.
+    display: block;
     margin-bottom: 14px;
-    color: var(--color-heading);
+    color: var(--color-accent);
     letter-spacing: 0.28em;
 
-    @include label(0.5625rem); // 9px
+    @include label(0.7rem);
   }
 
   &__heading--link {
-    display: inline-block;
     text-decoration: none;
-  }
-
-  &__list {
-    display: grid;
-    gap: 2px;
-    justify-content: start;
-  }
-
-  // Fills three rows, then continues in a new column to the right.
-  &__list--rows {
-    grid-template-rows: repeat(3, auto);
-    grid-auto-flow: column;
-    gap: 2px 64px;
   }
 
   &__item {
     display: block;
     font-family: v.$font-body;
-    font-size: 1.25rem; // 20px
+    font-size: 0.8rem;
     font-weight: 300;
     line-height: 1.55;
     color: var(--color-heading);
@@ -207,7 +205,8 @@
 
   &__subtitle {
     display: block;
-    font-size: 0.875rem; // 14px
+    font-size: 0.65rem;
+    line-height: 1.4;
     opacity: 0.45;
   }
 
@@ -215,10 +214,8 @@
     color: var(--color-heading);
     letter-spacing: 0.2em;
     text-decoration: none;
-    white-space: nowrap;
-    opacity: 0.45;
 
-    @include label(0.59375rem); // 9.5px
+    @include label(0.7rem);
   }
 
   // ---- Full-screen mobile panel -------------------------------------------
@@ -243,12 +240,23 @@
     }
 
     // Everything inside inherits the inverted ink — the signature included, which
-    // is why it needs no dark-mode handling of its own.
+    // is why it needs no dark-mode handling of its own. The accent is the
+    // exception: it stays the accent.
     .navbar__brand,
     .navbar__item,
-    .navbar__see-all,
-    .navbar__heading {
+    .navbar__see-all {
       color: inherit;
+    }
+
+    // Panel type is set for a dense dropdown; on a full screen it has to be
+    // readable and tappable instead.
+    .navbar__item {
+      padding: 2px 0;
+      font-size: 1.125rem;
+    }
+
+    .navbar__subtitle {
+      font-size: 0.8rem;
     }
   }
 
@@ -270,8 +278,6 @@
 
   &__accordion-trigger {
     display: flex;
-    gap: 14px;
-    align-items: baseline;
     width: 100%;
     padding: 14px 0;
     font-family: v.$font-body;
@@ -284,18 +290,40 @@
     border: 0;
   }
 
-  &__number {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    opacity: 0.35;
-  }
-
   &__sub {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 0 0 18px 34px;
+    gap: 10px;
+    padding: 0 0 18px;
+  }
+
+  // Obra's groups get a level of their own on mobile: tapping "Foto ensayo"
+  // opens its titles, rather than every title being dumped into one list.
+  &__subgroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__subgroup-trigger {
+    display: flex;
+    padding: 4px 0;
+    font-family: v.$font-body;
+    color: var(--color-accent);
+    letter-spacing: 0.28em;
+    text-align: left;
+    cursor: pointer;
+    background: none;
+    border: 0;
+
+    @include label(0.7rem);
+  }
+
+  &__subgroup-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 18px;
   }
 
   &__mobile-foot {

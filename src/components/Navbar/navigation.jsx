@@ -39,6 +39,9 @@ export const menus = [
       },
       {
         heading: 'Otros',
+        // On mobile these two stand on their own rather than behind an "Otros"
+        // accordion — there is no third level worth tapping through for them.
+        flatten: true,
         items: [
           { label: 'Vídeo', to: '/videos' },
           { label: 'Exposiciones', to: '/exposiciones' },
@@ -101,6 +104,7 @@ export const menus = [
     // No see-all link: both destinations are already in the list below it, so a
     // third link to one of them would just be a duplicate.
     featured: {
+      heading: 'Juan Diego Perez Arias',
       items: [
         { label: 'Biografía', to: '/biografia' },
         { label: 'Contacto', to: '/contacto' },

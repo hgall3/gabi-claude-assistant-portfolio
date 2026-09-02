@@ -11,6 +11,11 @@
   --color-bg: #fff;
   --color-border: rgba(128, 128, 128, 0.3);
 
+  // The one colour on an otherwise black-and-white site: a muted red for the
+  // headings inside the navbar panels. Desaturated on purpose — it should read
+  // as a warm accent, not as a signal.
+  --color-accent: #8f4a45;
+
   color-scheme: light dark;
 }
 
@@ -19,5 +24,7 @@
     --color-text: #9ca3af;
     --color-heading: #f3f4f6;
     --color-bg: #16171d;
+    // Lifted and softened: the light-mode red goes muddy against a dark ground.
+    --color-accent: #d99b93;
   }
 }

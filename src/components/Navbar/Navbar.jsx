@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { FaLinkedin, FaYoutube } from 'react-icons/fa'
 import { menus, contact, socials } from './navigation.jsx'
@@ -8,6 +8,25 @@ import './Navbar.scss'
 // Scroll distances that drive the bar's two behaviours.
 const HIDE_AFTER = 80 // px scrolled down before the bar leaves
 const SHRINK_AFTER = 40 // px before the signature steps down in size
+
+const COLUMN_ROWS = 3
+
+// Split a list into columns of three that are laid out independently.
+//
+// One grid with `grid-template-rows: repeat(3, auto)` would be shorter, but its
+// rows share a height across every column: a single long entry — Amnesia's
+// subtitle, say — makes that row tall everywhere, so the entry beside it drifts
+// away from its own neighbours. Chunking first gives each column its own even
+// rhythm.
+function toColumns(items) {
+  const columns = []
+
+  for (let i = 0; i < items.length; i += COLUMN_ROWS) {
+    columns.push(items.slice(i, i + COLUMN_ROWS))
+  }
+
+  return columns
+}
 
 // One item in a dropdown. Items without a `to` are pages that don't exist yet,
 // so they render as text rather than as a link to nowhere.
@@ -36,6 +55,7 @@ function Navbar() {
   const [openMenu, setOpenMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openSection, setOpenSection] = useState(null)
+  const [openGroup, setOpenGroup] = useState(null)
   const [hidden, setHidden] = useState(false)
   const [shrunk, setShrunk] = useState(false)
 
@@ -50,6 +70,7 @@ function Navbar() {
     setOpenMenu(null)
     setMobileOpen(false)
     setOpenSection(null)
+    setOpenGroup(null)
   }, [])
 
   // Close on navigation. Every in-app link already closes on click, but browser
@@ -63,6 +84,7 @@ function Navbar() {
     setOpenMenu(null)
     setMobileOpen(false)
     setOpenSection(null)
+    setOpenGroup(null)
   }
 
   // Hide on the way down, come back on the way up.
@@ -214,46 +236,51 @@ function Navbar() {
             aria-label={activeMenu.label}
             className="navbar__panel"
           >
-            {activeMenu.layout === 'columns' ? (
-              <div className="navbar__columns">
-                {activeMenu.groups.map((group) => (
-                  <div key={group.heading} className="navbar__group">
-                    {group.to ? (
-                      <NavLink
-                        to={group.to}
-                        className="navbar__heading navbar__heading--link"
-                        onClick={closeAll}
-                      >
-                        {group.heading}
-                      </NavLink>
-                    ) : (
-                      <p className="navbar__heading">{group.heading}</p>
-                    )}
+            {/* A lead column of fixed width, empty when a menu has no see-all
+                link. It is what makes every panel's content begin at the same x,
+                so Obra's headings line up with Destacadas. */}
+            <div className="navbar__lead">
+              {activeMenu.seeAll && (
+                <NavLink
+                  to={activeMenu.seeAll.to}
+                  className="navbar__see-all"
+                  onClick={closeAll}
+                >
+                  {activeMenu.seeAll.label}
+                </NavLink>
+              )}
+            </div>
 
-                    <div className="navbar__list">
-                      {group.items.map((item) => (
-                        <PanelItem
-                          key={item.label}
-                          item={item}
-                          onNavigate={closeAll}
-                        />
-                      ))}
+            <div className="navbar__content">
+              {activeMenu.layout === 'columns' ? (
+                <div className="navbar__columns">
+                  {activeMenu.groups.map((group) => (
+                    <div key={group.heading} className="navbar__group">
+                      {group.to ? (
+                        <NavLink
+                          to={group.to}
+                          className="navbar__heading navbar__heading--link"
+                          onClick={closeAll}
+                        >
+                          {group.heading}
+                        </NavLink>
+                      ) : (
+                        <p className="navbar__heading">{group.heading}</p>
+                      )}
+
+                      <div className="navbar__column">
+                        {group.items.map((item) => (
+                          <PanelItem
+                            key={item.label}
+                            item={item}
+                            onNavigate={closeAll}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="navbar__featured">
-                {activeMenu.seeAll && (
-                  <NavLink
-                    to={activeMenu.seeAll.to}
-                    className="navbar__see-all"
-                    onClick={closeAll}
-                  >
-                    {activeMenu.seeAll.label}
-                  </NavLink>
-                )}
-
+                  ))}
+                </div>
+              ) : (
                 <div className="navbar__group">
                   {activeMenu.featured.heading && (
                     <p className="navbar__heading">
@@ -261,18 +288,22 @@ function Navbar() {
                     </p>
                   )}
 
-                  <div className="navbar__list navbar__list--rows">
-                    {activeMenu.featured.items.map((item) => (
-                      <PanelItem
-                        key={item.label}
-                        item={item}
-                        onNavigate={closeAll}
-                      />
+                  <div className="navbar__columns">
+                    {toColumns(activeMenu.featured.items).map((column) => (
+                      <div key={column[0].label} className="navbar__column">
+                        {column.map((item) => (
+                          <PanelItem
+                            key={item.label}
+                            item={item}
+                            onNavigate={closeAll}
+                          />
+                        ))}
+                      </div>
                     ))}
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
       </header>
@@ -295,11 +326,7 @@ function Navbar() {
           </div>
 
           <nav className="navbar__mobile-nav" aria-label="Principal">
-            {menus.map((menu, index) => {
-              const items =
-                menu.layout === 'columns'
-                  ? menu.groups.flatMap((group) => group.items)
-                  : menu.featured.items
+            {menus.map((menu) => {
               const expanded = openSection === menu.id
 
               return (
@@ -309,37 +336,82 @@ function Navbar() {
                     className="navbar__accordion-trigger"
                     aria-expanded={expanded}
                     aria-controls={`nav-section-${menu.id}`}
-                    onClick={() =>
+                    onClick={() => {
+                      setOpenGroup(null)
                       setOpenSection((current) =>
                         current === menu.id ? null : menu.id,
                       )
-                    }
+                    }}
                   >
-                    <span className="navbar__number" aria-hidden="true">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
                     {menu.label}
                   </button>
 
                   {expanded && (
                     <div id={`nav-section-${menu.id}`} className="navbar__sub">
-                      {menu.seeAll && (
-                        <NavLink
-                          to={menu.seeAll.to}
-                          className="navbar__see-all"
-                          onClick={closeAll}
-                        >
-                          {menu.seeAll.label}
-                        </NavLink>
-                      )}
+                      {menu.layout === 'columns'
+                        ? menu.groups.map((group, index) => {
+                            // Vídeo and Exposiciones stand on their own rather
+                            // than behind an extra "Otros" tap.
+                            if (group.flatten) {
+                              return (
+                                <Fragment key={group.heading}>
+                                  {group.items.map((item) => (
+                                    <PanelItem
+                                      key={item.label}
+                                      item={item}
+                                      onNavigate={closeAll}
+                                    />
+                                  ))}
+                                </Fragment>
+                              )
+                            }
 
-                      {items.map((item) => (
-                        <PanelItem
-                          key={item.label}
-                          item={item}
-                          onNavigate={closeAll}
-                        />
-                      ))}
+                            const groupId = `${menu.id}-${index}`
+                            const groupOpen = openGroup === groupId
+
+                            return (
+                              <div
+                                key={group.heading}
+                                className="navbar__subgroup"
+                              >
+                                <button
+                                  type="button"
+                                  className="navbar__subgroup-trigger"
+                                  aria-expanded={groupOpen}
+                                  aria-controls={`nav-group-${groupId}`}
+                                  onClick={() =>
+                                    setOpenGroup((current) =>
+                                      current === groupId ? null : groupId,
+                                    )
+                                  }
+                                >
+                                  {group.heading}
+                                </button>
+
+                                {groupOpen && (
+                                  <div
+                                    id={`nav-group-${groupId}`}
+                                    className="navbar__subgroup-items"
+                                  >
+                                    {group.items.map((item) => (
+                                      <PanelItem
+                                        key={item.label}
+                                        item={item}
+                                        onNavigate={closeAll}
+                                      />
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })
+                        : menu.featured.items.map((item) => (
+                            <PanelItem
+                              key={item.label}
+                              item={item}
+                              onNavigate={closeAll}
+                            />
+                          ))}
                     </div>
                   )}
                 </div>
