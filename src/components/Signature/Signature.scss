@@ -1,0 +1,6 @@
+// Sizing belongs to whatever is using the mark: callers set a height, and the
+// width follows from the viewBox's aspect ratio.
+.signature {
+  display: block;
+  width: auto;
+}

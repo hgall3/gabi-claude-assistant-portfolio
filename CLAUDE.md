@@ -17,8 +17,14 @@ npm run preview  # serve the production build locally
 src/pages/<Name>/       Route-level views (see the route table below)
 src/components/<Name>/  Reusable UI (Navbar, Footer)
 src/styles/             Global SCSS partials
-src/hooks/              Shared hooks, one `.js` file each (no folder, no styles)
+src/hooks/              Shared hooks, one file each (no folder, no styles)
+src/content/            The site's copy: titles, lists, anything editorial
 ```
+
+Every file under `src/` is named `.jsx`, including modules that hold no JSX at
+all — data modules and hooks included. The extension is uniform on purpose rather
+than describing each file's contents. Root config files (`vite.config.js`,
+`eslint.config.js`) run in Node and keep `.js`.
 
 Every page and component lives in its own folder holding a matching `.jsx` and
 `.scss` file — `Navbar/Navbar.jsx` alongside `Navbar/Navbar.scss`. Follow this
@@ -49,9 +55,13 @@ A component reaches the Sass variables by relative path —
 Use the existing tokens rather than hardcoding colors or spacing.
 
 Typography is set globally in `_typography.scss` — Playfair Display for `h1`–`h3`,
-Work Sans for `h4`–`h6` and body copy. Sizes are `rem` (never `px`, which ignores
-the user's browser font-size setting) and line heights are unitless ratios so they
-hold when a size steps up at the breakpoint. Components should rely on the base
+Work Sans for `h4`–`h6` and body copy. **Font sizes** are `rem`, because a `px`
+font size ignores a reader who has raised their browser's default for legibility.
+That reason is specific to type: `px` is right for hairlines, fixed touch targets
+and layout dimensions that shouldn't grow with someone's font-size preference,
+and `0.0625rem` for a 1px border helps nobody. Use judgment and say which you
+picked. Line heights stay unitless ratios so they hold when a size steps up at
+the breakpoint. Components should rely on the base
 element styles rather than restating font sizes.
 
 Fonts are **self-hosted** through [`@fontsource`](https://fontsource.org) packages,
@@ -110,9 +120,33 @@ unaccented spelling is deliberate, so don't add the accent even in Spanish copy.
 | `/contacto` | `Contact` | Contacto |
 | `*` | `NotFound` | — |
 
-`Navbar.jsx` holds one `links` array feeding both the desktop row and the mobile
-overlay, so a new route is added to the nav in one place. All nine links sit at
-the top level; there is no dropdown.
+The navbar does not mirror this table. It groups the site under four dropdowns —
+**Obra · Historias · Libros · Autor** — and `Inicio` is not among them: the
+signature wordmark is the link home. Its content lives in
+`components/Navbar/navigation.js`, apart from the component so `Navbar.jsx` stays
+about behaviour. An item there with a `to` renders as a link; one without renders
+as plain text, which is how the menu can show pages that aren't built yet without
+sending anyone to a 404. Adding the page later means adding its `to`, nothing
+else. Those future paths nest under their section —
+`/foto-ensayo/el-hielero-del-chimborazo`.
+
+The navbar switches from its full-screen mobile panel to the desktop row at
+`$bp-sm: 768px`, not `$bp-md`.
+
+Content does not live in components. The lists of photo essays, stories, books
+and the rest are in `src/content/`, which the navbar and the section pages both
+read, so a title is written once and can't drift between a menu and the page it
+points at. Entries there carry the shape the content has — a book has a title and
+a subtitle — and whatever renders them decides what to show; the navbar maps them
+to menu labels and shows titles alone.
+
+The signature wordmark is `components/Signature/`, an inlined `<svg>` rather than
+an `<img>`. That is deliberate: an external image can't inherit CSS, so
+`fill: currentColor` only works inline. It means the mark takes the colour of
+whatever contains it — ink on the light page, white in dark mode, flipped again
+inside the inverted mobile panel — with no filter, no second file and no
+theme-specific token. Do the same for any future mark that has to follow the
+theme.
 
 ## Page metadata
 
@@ -161,7 +195,7 @@ before it applies the SPA rewrite, so the catch-all never swallows them.
 The sitemap lists every indexable route as an absolute URL, which the sitemap
 spec requires — a relative path in it is silently ignored. It is maintained by
 hand, so **a new route needs a `<url>` entry** alongside its addition to
-`main.jsx` and to the `links` array in `Navbar.jsx`. It deliberately carries no
+`main.jsx` and, if it belongs in the menu, to `Navbar/navigation.js`. It deliberately carries no
 `<lastmod>`, `<changefreq>` or `<priority>`: the first goes stale into a lie, and
 Google ignores the other two.
 
