@@ -142,18 +142,15 @@
 
   // Full width beneath the bar rather than a floating card.
   &__panel {
-    display: grid;
-    // The lead column is a fixed width rather than content-width, so the content
-    // column starts at the same x in every panel whether or not there is a
-    // see-all link to put in it.
-    grid-template-columns: 220px 1fr;
-    align-items: start;
     padding: 30px v.$space 32px;
 
     @include surface;
 
     @media (min-width: v.$bp-sm) {
-      padding: 30px 56px 32px;
+      // The left inset is load-bearing, not decoration: it holds the starting x
+      // the panels had while a see-all column stood there, so every menu's
+      // content still begins in the same place.
+      padding: 30px 56px 32px 276px;
     }
   }
 
@@ -210,14 +207,6 @@
     opacity: 0.45;
   }
 
-  &__see-all {
-    color: var(--color-heading);
-    letter-spacing: 0.2em;
-    text-decoration: none;
-
-    @include label(0.7rem);
-  }
-
   // ---- Full-screen mobile panel -------------------------------------------
 
   &__mobile {
@@ -243,8 +232,7 @@
     // is why it needs no dark-mode handling of its own. The accent is the
     // exception: it stays the accent.
     .navbar__brand,
-    .navbar__item,
-    .navbar__see-all {
+    .navbar__item {
       color: inherit;
     }
 

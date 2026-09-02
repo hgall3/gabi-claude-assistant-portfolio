@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { FaLinkedin, FaYoutube } from 'react-icons/fa'
 import { menus, contact, socials } from './navigation.jsx'
@@ -26,6 +26,24 @@ function toColumns(items) {
   }
 
   return columns
+}
+
+// A panel heading. Where it has a `to` it is the way into that section as well —
+// no separate see-all link repeating it underneath.
+function PanelHeading({ heading, to, onNavigate }) {
+  if (!heading) return null
+
+  if (!to) return <p className="navbar__heading">{heading}</p>
+
+  return (
+    <NavLink
+      to={to}
+      className="navbar__heading navbar__heading--link"
+      onClick={onNavigate}
+    >
+      {heading}
+    </NavLink>
+  )
 }
 
 // One item in a dropdown. Items without a `to` are pages that don't exist yet,
@@ -236,57 +254,38 @@ function Navbar() {
             aria-label={activeMenu.label}
             className="navbar__panel"
           >
-            {/* A lead column of fixed width, empty when a menu has no see-all
-                link. It is what makes every panel's content begin at the same x,
-                so Obra's headings line up with Destacadas. */}
-            <div className="navbar__lead">
-              {activeMenu.seeAll && (
-                <NavLink
-                  to={activeMenu.seeAll.to}
-                  className="navbar__see-all"
-                  onClick={closeAll}
-                >
-                  {activeMenu.seeAll.label}
-                </NavLink>
-              )}
-            </div>
-
             <div className="navbar__content">
               {activeMenu.layout === 'columns' ? (
                 <div className="navbar__columns">
                   {activeMenu.groups.map((group) => (
                     <div key={group.heading} className="navbar__group">
-                      {group.to ? (
-                        <NavLink
-                          to={group.to}
-                          className="navbar__heading navbar__heading--link"
-                          onClick={closeAll}
-                        >
-                          {group.heading}
-                        </NavLink>
-                      ) : (
-                        <p className="navbar__heading">{group.heading}</p>
-                      )}
+                      <PanelHeading
+                        heading={group.heading}
+                        to={group.to}
+                        onNavigate={closeAll}
+                      />
 
-                      <div className="navbar__column">
-                        {group.items.map((item) => (
-                          <PanelItem
-                            key={item.label}
-                            item={item}
-                            onNavigate={closeAll}
-                          />
-                        ))}
-                      </div>
+                      {group.items && (
+                        <div className="navbar__column">
+                          {group.items.map((item) => (
+                            <PanelItem
+                              key={item.label}
+                              item={item}
+                              onNavigate={closeAll}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className="navbar__group">
-                  {activeMenu.featured.heading && (
-                    <p className="navbar__heading">
-                      {activeMenu.featured.heading}
-                    </p>
-                  )}
+                  <PanelHeading
+                    heading={activeMenu.featured.heading}
+                    to={activeMenu.featured.to}
+                    onNavigate={closeAll}
+                  />
 
                   <div className="navbar__columns">
                     {toColumns(activeMenu.featured.items).map((column) => (
@@ -352,17 +351,18 @@ function Navbar() {
                         ? menu.groups.map((group, index) => {
                             // Vídeo and Exposiciones stand on their own rather
                             // than behind an extra "Otros" tap.
-                            if (group.flatten) {
+                            // Nothing underneath it, so it is a destination
+                            // rather than a section: link straight there.
+                            if (!group.items) {
                               return (
-                                <Fragment key={group.heading}>
-                                  {group.items.map((item) => (
-                                    <PanelItem
-                                      key={item.label}
-                                      item={item}
-                                      onNavigate={closeAll}
-                                    />
-                                  ))}
-                                </Fragment>
+                                <Link
+                                  key={group.heading}
+                                  to={group.to}
+                                  className="navbar__item"
+                                  onClick={closeAll}
+                                >
+                                  <span>{group.heading}</span>
+                                </Link>
                               )
                             }
 

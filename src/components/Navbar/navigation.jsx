@@ -7,9 +7,9 @@
 // built their paths nest under their section — `/foto-ensayo/el-hielero-del-chimborazo`,
 // `/libros/miradas` — so adding a `to` here is all this file will need.
 
-// Panels come in two shapes. 'columns' puts each group's heading above its own
-// list, side by side. 'featured' is a see-all link on the left and a single
-// highlighted list on the right.
+// Panels come in two shapes. 'columns' is a row of groups, each with its heading
+// above its own list; a group with no items is just a heading that links
+// somewhere. 'featured' is a single list under one heading.
 
 export const menus = [
   {
@@ -37,16 +37,10 @@ export const menus = [
           { label: 'Quito' },
         ],
       },
-      {
-        heading: 'Otros',
-        // On mobile these two stand on their own rather than behind an "Otros"
-        // accordion — there is no third level worth tapping through for them.
-        flatten: true,
-        items: [
-          { label: 'Vídeo', to: '/videos' },
-          { label: 'Exposiciones', to: '/exposiciones' },
-        ],
-      },
+      // Headings in their own right, with nothing beneath them: these two are
+      // single pages, not collections.
+      { heading: 'Vídeo', to: '/videos' },
+      { heading: 'Exposiciones', to: '/exposiciones' },
     ],
   },
 
@@ -54,9 +48,11 @@ export const menus = [
     id: 'historias',
     label: 'Historias',
     layout: 'featured',
-    seeAll: { label: 'Todas las historias', to: '/historias' },
     featured: {
-      heading: 'Destacadas',
+      // The heading is the way through to the section — there is no second
+      // see-all link repeating it.
+      heading: 'Ver todas las historias',
+      to: '/historias',
       items: [
         { label: 'La niña del vestido amarillo' },
         { label: 'Caminos de identidad' },
@@ -72,9 +68,9 @@ export const menus = [
     id: 'libros',
     label: 'Libros',
     layout: 'featured',
-    seeAll: { label: 'Ver todos los libros', to: '/libros' },
     featured: {
-      heading: 'Destacados',
+      heading: 'Ver todos los libros',
+      to: '/libros',
       // Subtitles are the half after the first dash in the title Juan Diego
       // supplied. Only the first one splits: "1934-1980" is part of a subtitle,
       // not another separator.
@@ -101,8 +97,6 @@ export const menus = [
     id: 'autor',
     label: 'Autor',
     layout: 'featured',
-    // No see-all link: both destinations are already in the list below it, so a
-    // third link to one of them would just be a duplicate.
     featured: {
       heading: 'Juan Diego Perez Arias',
       items: [
