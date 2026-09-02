@@ -285,35 +285,6 @@
     padding: 0 0 18px;
   }
 
-  // Obra's groups get a level of their own on mobile: tapping "Foto ensayo"
-  // opens its titles, rather than every title being dumped into one list.
-  &__subgroup {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &__subgroup-trigger {
-    display: flex;
-    padding: 4px 0;
-    font-family: v.$font-body;
-    color: var(--color-accent);
-    letter-spacing: 0.28em;
-    text-align: left;
-    cursor: pointer;
-    background: none;
-    border: 0;
-
-    @include label(0.7rem);
-  }
-
-  &__subgroup-items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 18px;
-  }
-
   &__mobile-foot {
     display: flex;
     flex-direction: column;

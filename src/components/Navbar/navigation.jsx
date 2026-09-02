@@ -37,10 +37,22 @@ export const menus = [
           { label: 'Quito' },
         ],
       },
-      // Headings in their own right, with nothing beneath them: these two are
-      // single pages, not collections.
-      { heading: 'Vídeo', to: '/videos' },
-      { heading: 'Exposiciones', to: '/exposiciones' },
+      {
+        heading: 'Vídeo',
+        to: '/videos',
+        items: [
+          { label: 'Ecuador rostros del agua' },
+          { label: 'Yasuní' },
+          { label: 'Ecuador la vida en estado puro' },
+          { label: 'Quito, la ciudad imaginaria' },
+          { label: 'Relatos de un caminar' },
+        ],
+      },
+      {
+        heading: 'Exposiciones',
+        to: '/exposiciones',
+        items: [{ label: 'Miradas' }],
+      },
     ],
   },
 

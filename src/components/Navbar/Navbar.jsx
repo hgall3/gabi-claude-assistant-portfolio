@@ -73,7 +73,6 @@ function Navbar() {
   const [openMenu, setOpenMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openSection, setOpenSection] = useState(null)
-  const [openGroup, setOpenGroup] = useState(null)
   const [hidden, setHidden] = useState(false)
   const [shrunk, setShrunk] = useState(false)
 
@@ -88,7 +87,6 @@ function Navbar() {
     setOpenMenu(null)
     setMobileOpen(false)
     setOpenSection(null)
-    setOpenGroup(null)
   }, [])
 
   // Close on navigation. Every in-app link already closes on click, but browser
@@ -102,7 +100,6 @@ function Navbar() {
     setOpenMenu(null)
     setMobileOpen(false)
     setOpenSection(null)
-    setOpenGroup(null)
   }
 
   // Hide on the way down, come back on the way up.
@@ -335,12 +332,11 @@ function Navbar() {
                     className="navbar__accordion-trigger"
                     aria-expanded={expanded}
                     aria-controls={`nav-section-${menu.id}`}
-                    onClick={() => {
-                      setOpenGroup(null)
+                    onClick={() =>
                       setOpenSection((current) =>
                         current === menu.id ? null : menu.id,
                       )
-                    }}
+                    }
                   >
                     {menu.label}
                   </button>
@@ -348,63 +344,19 @@ function Navbar() {
                   {expanded && (
                     <div id={`nav-section-${menu.id}`} className="navbar__sub">
                       {menu.layout === 'columns'
-                        ? menu.groups.map((group, index) => {
-                            // Vídeo and Exposiciones stand on their own rather
-                            // than behind an extra "Otros" tap.
-                            // Nothing underneath it, so it is a destination
-                            // rather than a section: link straight there.
-                            if (!group.items) {
-                              return (
-                                <Link
-                                  key={group.heading}
-                                  to={group.to}
-                                  className="navbar__item"
-                                  onClick={closeAll}
-                                >
-                                  <span>{group.heading}</span>
-                                </Link>
-                              )
-                            }
-
-                            const groupId = `${menu.id}-${index}`
-                            const groupOpen = openGroup === groupId
-
-                            return (
-                              <div
-                                key={group.heading}
-                                className="navbar__subgroup"
-                              >
-                                <button
-                                  type="button"
-                                  className="navbar__subgroup-trigger"
-                                  aria-expanded={groupOpen}
-                                  aria-controls={`nav-group-${groupId}`}
-                                  onClick={() =>
-                                    setOpenGroup((current) =>
-                                      current === groupId ? null : groupId,
-                                    )
-                                  }
-                                >
-                                  {group.heading}
-                                </button>
-
-                                {groupOpen && (
-                                  <div
-                                    id={`nav-group-${groupId}`}
-                                    className="navbar__subgroup-items"
-                                  >
-                                    {group.items.map((item) => (
-                                      <PanelItem
-                                        key={item.label}
-                                        item={item}
-                                        onNavigate={closeAll}
-                                      />
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            )
-                          })
+                        ? // On mobile a group is one link to its section page,
+                          // not a second thing to expand. The titles inside it
+                          // live on that page, which is where tapping it goes.
+                          menu.groups.map((group) => (
+                            <Link
+                              key={group.heading}
+                              to={group.to}
+                              className="navbar__item"
+                              onClick={closeAll}
+                            >
+                              <span>{group.heading}</span>
+                            </Link>
+                          ))
                         : menu.featured.items.map((item) => (
                             <PanelItem
                               key={item.label}
