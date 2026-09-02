@@ -137,11 +137,14 @@ Routing is client-side, so `netlify.toml` rewrites every path that isn't a real
 file to `index.html`. New routes therefore need no deploy change, and the rule
 must not be duplicated as a `public/_redirects` file.
 
-**Not enabled:** branch deploys and deploy previews. `dev` and open pull requests
-get no preview URL of their own — `dev--…netlify.app` and
-`deploy-preview-<n>--…netlify.app` both 404 — so a change is only visible online
-once it is promoted to `main`. Turning them on is a browser step in Netlify, not
-something `netlify.toml` controls.
+Branch deploys and deploy previews are both enabled. Every branch gets
+`<branch>--juandiegoperezarias.netlify.app` and every pull request gets
+`deploy-preview-<n>--…`, with the link posted onto the pull request itself — so a
+layout change can be opened on a real phone before it is promoted. A branch has
+no URL until its first push after the branch is created.
+
+Netlify sets `X-Robots-Tag: noindex` on preview deploys by itself, so they cannot
+be indexed as duplicates of the live site. Don't add a header for this.
 
 **Planned, not yet built:** a custom domain. The `.netlify.app` subdomain is
 currently the canonical origin.
