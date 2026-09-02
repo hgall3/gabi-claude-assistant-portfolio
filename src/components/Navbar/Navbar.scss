@@ -244,6 +244,12 @@
       text-align: center;
     }
 
+    // The way out of the section, not another title in it. Must follow the rule
+    // above: same specificity, so order is what wins.
+    .navbar__item--all {
+      color: var(--color-accent);
+    }
+
     .navbar__subtitle {
       font-size: 0.8rem;
     }
