@@ -200,13 +200,6 @@
     cursor: default;
   }
 
-  &__subtitle {
-    display: block;
-    font-size: 0.65rem;
-    line-height: 1.4;
-    opacity: 0.45;
-  }
-
   // ---- Full-screen mobile panel -------------------------------------------
 
   &__mobile {
@@ -251,10 +244,6 @@
     // be a browser-synthesised fake.
     .navbar__item--all {
       font-weight: 600;
-    }
-
-    .navbar__subtitle {
-      font-size: 0.8rem;
     }
   }
 

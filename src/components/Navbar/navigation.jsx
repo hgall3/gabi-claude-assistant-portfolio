@@ -84,8 +84,9 @@ export const menus = [
       heading: 'Ver todos los libros',
       to: '/libros',
       // Subtitles are the half after the first dash in the title Juan Diego
-      // supplied. Only the first one splits: "1934-1980" is part of a subtitle,
-      // not another separator.
+      // supplied — only the first dash splits, since "1934-1980" belongs to a
+      // subtitle rather than being another separator. The navbar shows titles
+      // alone; these are kept for the Libros page, which will want them.
       items: [
         { label: 'Miradas', subtitle: 'Por los caminos de un país oculto' },
         { label: 'Los restos de viaje', subtitle: 'Días de cámara' },

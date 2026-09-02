@@ -48,22 +48,17 @@ function PanelHeading({ heading, to, onNavigate }) {
 // One item in a dropdown. Items without a `to` are pages that don't exist yet,
 // so they render as text rather than as a link to nowhere.
 function PanelItem({ item, onNavigate }) {
-  const body = (
-    <>
-      <span>{item.label}</span>
-      {item.subtitle && (
-        <span className="navbar__subtitle">{item.subtitle}</span>
-      )}
-    </>
-  )
-
+  // Titles only. The books carry subtitles, but a menu is for finding your way,
+  // not for reading — they belong on the Libros page.
   if (!item.to) {
-    return <span className="navbar__item navbar__item--inert">{body}</span>
+    return (
+      <span className="navbar__item navbar__item--inert">{item.label}</span>
+    )
   }
 
   return (
     <Link to={item.to} className="navbar__item" onClick={onNavigate}>
-      {body}
+      {item.label}
     </Link>
   )
 }
