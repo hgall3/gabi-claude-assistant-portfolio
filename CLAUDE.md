@@ -18,6 +18,7 @@ src/pages/<Name>/       Route-level views (see the route table below)
 src/components/<Name>/  Reusable UI (Navbar, Footer)
 src/styles/             Global SCSS partials
 src/hooks/              Shared hooks, one file each (no folder, no styles)
+src/content/            The site's copy: titles, lists, anything editorial
 ```
 
 Every file under `src/` is named `.jsx`, including modules that hold no JSX at
@@ -131,6 +132,13 @@ else. Those future paths nest under their section —
 
 The navbar switches from its full-screen mobile panel to the desktop row at
 `$bp-sm: 768px`, not `$bp-md`.
+
+Content does not live in components. The lists of photo essays, stories, books
+and the rest are in `src/content/`, which the navbar and the section pages both
+read, so a title is written once and can't drift between a menu and the page it
+points at. Entries there carry the shape the content has — a book has a title and
+a subtitle — and whatever renders them decides what to show; the navbar maps them
+to menu labels and shows titles alone.
 
 The signature wordmark is `components/Signature/`, an inlined `<svg>` rather than
 an `<img>`. That is deliberate: an external image can't inherit CSS, so
