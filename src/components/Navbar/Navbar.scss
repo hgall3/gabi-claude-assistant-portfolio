@@ -244,10 +244,13 @@
       text-align: center;
     }
 
-    // The way out of the section, not another title in it. Must follow the rule
-    // above: same specificity, so order is what wins.
+    // The way out of the section, not another title in it — carried by weight
+    // rather than colour. It keeps the inherited ink, which is white against the
+    // inverted panel and correctly becomes dark when the panel inverts the other
+    // way in dark mode. 600 is the heaviest Work Sans weight loaded; 700 would
+    // be a browser-synthesised fake.
     .navbar__item--all {
-      color: var(--color-accent);
+      font-weight: 600;
     }
 
     .navbar__subtitle {
