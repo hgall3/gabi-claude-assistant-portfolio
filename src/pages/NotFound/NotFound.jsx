@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { usePageMeta } from '../../hooks/usePageMeta.js'
+import { usePageMeta } from '../../hooks/usePageMeta.jsx'
 import './NotFound.scss'
 
 // Reached through the catch-all route in main.jsx. Netlify rewrites every

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { FaLinkedin, FaYoutube } from 'react-icons/fa'
-import { menus, contact, socials } from './navigation.js'
+import { menus, contact, socials } from './navigation.jsx'
 import Signature from '../Signature/Signature.jsx'
 import './Navbar.scss'
 

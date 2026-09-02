@@ -1,4 +1,4 @@
-import { usePageMeta } from '../../hooks/usePageMeta.js'
+import { usePageMeta } from '../../hooks/usePageMeta.jsx'
 import './Contact.scss'
 
 function Contact() {

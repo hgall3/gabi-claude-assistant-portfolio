@@ -17,8 +17,13 @@ npm run preview  # serve the production build locally
 src/pages/<Name>/       Route-level views (see the route table below)
 src/components/<Name>/  Reusable UI (Navbar, Footer)
 src/styles/             Global SCSS partials
-src/hooks/              Shared hooks, one `.js` file each (no folder, no styles)
+src/hooks/              Shared hooks, one file each (no folder, no styles)
 ```
+
+Every file under `src/` is named `.jsx`, including modules that hold no JSX at
+all — data modules and hooks included. The extension is uniform on purpose rather
+than describing each file's contents. Root config files (`vite.config.js`,
+`eslint.config.js`) run in Node and keep `.js`.
 
 Every page and component lives in its own folder holding a matching `.jsx` and
 `.scss` file — `Navbar/Navbar.jsx` alongside `Navbar/Navbar.scss`. Follow this
