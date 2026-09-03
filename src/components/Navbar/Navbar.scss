@@ -1,75 +1,311 @@
 @use '../../styles/variables' as v;
 
+// Editorial navbar: black and white only. De-emphasis is opacity on the ink
+// colour rather than a grey value, so it tracks the ink instead of being pinned
+// to a grey that the tokens know nothing about.
+
+// The bar and the panel share one background treatment.
+@mixin surface {
+  background: color-mix(in srgb, var(--color-bg) 96%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); // Safari still wants the prefix.
+  border-bottom: 1px solid color-mix(in srgb, var(--color-heading) 12%, transparent);
+}
+
+// Uppercase tracked labels. Sizes stay in rem so they follow a reader who has
+// raised their browser's default font size; the fixed dimensions further down
+// (bar height, touch targets, hairlines) are px, where growing with the type
+// would be wrong.
+@mixin label($size) {
+  font-family: v.$font-body;
+  font-size: $size;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: v.$space;
-  padding: 16px v.$space;
-  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 29;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+  @include surface;
+
+  &.is-hidden {
+    transform: translateY(-100%);
+  }
+
+  // The strip that catches the cursor at the top edge while the bar is away.
+  // Mounted only in that state, so it never intercepts a click on the page.
+  &__reveal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 30;
+    height: 22px;
+  }
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: v.$space;
+    padding: 0 v.$space;
+  }
 
   &__brand {
+    display: flex;
+    // The mark is `fill: currentColor`, and `a` inherits the muted body colour.
+    // Anchor it to the ink so the signature is black, not grey-purple.
     color: var(--color-heading);
-    font-weight: 600;
     text-decoration: none;
   }
 
-  // Sits above the overlay so the same button also closes it.
-  &__toggle {
-    position: relative;
-    z-index: 11;
-    display: flex;
-    padding: 4px;
-    color: inherit;
-    background: none;
-    border: 0;
-    cursor: pointer;
+  &__signature {
+    width: auto;
+    height: 46px;
+    transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+    @media (min-width: v.$bp-sm) {
+      height: 76px;
+
+      .is-shrunk & {
+        height: 48px;
+      }
+    }
   }
 
-  // Mobile default: out of the layout entirely until the toggle opens it,
-  // then it covers the viewport as a centred column.
-  &__links {
+  // Mobile default: the row of triggers is replaced by the menu button.
+  &__nav {
     display: none;
 
-    &.is-open {
-      position: fixed;
-      inset: 0;
-      z-index: 10;
+    @media (min-width: v.$bp-sm) {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: v.$space;
-      background: var(--color-bg);
-    }
-
-    a {
-      padding: 4px 0;
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s;
-
-      &:hover {
-        color: var(--color-heading);
-      }
-
-      // NavLink adds `active` on its own when the route matches.
-      &.active {
-        color: var(--color-heading);
-        border-bottom-color: currentColor;
-      }
+      gap: 28px;
     }
   }
 
-  // Desktop: no hamburger, links back to a plain row.
-  @media (min-width: v.$bp-md) {
-    &__toggle {
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 0 4px;
+    color: var(--color-heading);
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    background: none;
+    // Transparent rather than absent, so opening a panel doesn't shift the row.
+    border: 0;
+    border-bottom: 2px solid transparent;
+
+    @include label(0.65625rem); // 10.5px
+
+    &.is-open {
+      border-bottom-color: var(--color-heading);
+    }
+  }
+
+  &__caret {
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  &__burger,
+  &__close {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    // 44px is the smallest reliable touch target.
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    background: none;
+    border: 0;
+
+    @media (min-width: v.$bp-sm) {
+      display: none;
+    }
+  }
+
+  &__stroke {
+    width: 22px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  // ---- Dropdown panel -----------------------------------------------------
+
+  // Full width beneath the bar rather than a floating card.
+  &__panel {
+    padding: 30px v.$space 32px;
+
+    @include surface;
+
+    @media (min-width: v.$bp-sm) {
+      // The left inset is load-bearing, not decoration: it holds the starting x
+      // the panels had while a see-all column stood there, so every menu's
+      // content still begins in the same place.
+      padding: 30px 56px 32px 276px;
+    }
+  }
+
+  &__columns {
+    display: flex;
+    align-items: start;
+    gap: 72px;
+  }
+
+  // One column of entries, spaced evenly. Independent of its neighbours, so a
+  // wrapped subtitle in the next column can't stretch the rhythm here.
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  &__heading {
+    // Block, not inline: an inline-block heading sits on a text baseline and
+    // carries the line's descender space, which pushed the two linked headings
+    // in Obra below the plain one beside them.
+    display: block;
+    margin-bottom: 14px;
+    color: var(--color-accent);
+    letter-spacing: 0.28em;
+
+    @include label(0.7rem);
+  }
+
+  &__heading--link {
+    text-decoration: none;
+  }
+
+  &__item {
+    display: block;
+    font-family: v.$font-body;
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--color-heading);
+    text-align: left;
+    text-decoration: none;
+  }
+
+  // A page that doesn't exist yet: shown so the structure reads, but not a link.
+  &__item--inert {
+    cursor: default;
+  }
+
+  // ---- Full-screen mobile panel -------------------------------------------
+
+  &__mobile {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space;
+    padding: 16px v.$space 32px;
+    overflow-y: auto;
+    // The same ground and ink as the page. The panel covers the whole screen, so
+    // anything else would read as a different site for as long as it is open.
+    color: var(--color-heading);
+    background: var(--color-bg);
+
+    @media (min-width: v.$bp-sm) {
       display: none;
     }
 
-    &__links {
-      display: flex;
-      gap: 20px;
+    // Panel type is set for a dense dropdown; on a full screen it has to be
+    // readable and tappable instead.
+    .navbar__item {
+      padding: 2px 0;
+      font-size: 1.125rem;
+      text-align: center;
     }
+
+    // The way out of the section, not another title in it — carried by weight
+    // rather than colour. 600 is the heaviest Work Sans weight loaded; 700 would
+    // be a browser-synthesised fake.
+    .navbar__item--all {
+      font-weight: 600;
+    }
+  }
+
+  // Only the close button lives here now that the mark has moved to the foot.
+  &__mobile-head {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__mobile-nav {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &__accordion {
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-heading) 15%, transparent);
+  }
+
+  &__accordion-trigger {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 14px 0;
+    font-family: v.$font-body;
+    font-size: 2.5rem; // 40px
+    font-weight: 300;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    background: none;
+    border: 0;
+  }
+
+  &__sub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0 0 18px;
+  }
+
+  &__mobile-mark {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 8px;
+  }
+
+  // Deliberately larger than the bar's signature: heading the panel it is the
+  // composition, not a piece of navigation furniture.
+  &__mark {
+    // Sized by width rather than height: the mark is two and a half times wider
+    // than it is tall, so width is what decides whether it fits the phone.
+    width: min(62vw, 260px);
+    height: auto;
+  }
+
+  // ---- Shared states ------------------------------------------------------
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+// Honour a reader who has asked the interface to stop moving. The bar still
+// hides and returns — that is behaviour, not decoration — it just stops
+// sliding and resizing to get there.
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__signature {
+    transition: none;
   }
 }

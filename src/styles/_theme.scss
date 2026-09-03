@@ -1,5 +1,12 @@
-// Design tokens as CSS custom properties, so they can respond to dark mode.
-// (Sass variables can't — they're resolved at build time, before any media query.)
+// Design tokens as CSS custom properties rather than Sass variables. Sass
+// variables are resolved at build time and are gone before the page runs, so
+// nothing could ever swap them; custom properties can be swapped at runtime,
+// which is what a manual light/dark toggle would do.
+//
+// The site does NOT follow the visitor's OS appearance setting. There is one set
+// of values here and everyone gets it, whatever their device or the time of day.
+// Do not add a `prefers-color-scheme` block: an explicit choice by the visitor is
+// the only thing that should ever change the theme.
 //
 // This file EMITS CSS, so it must be used exactly once: only main.scss pulls it in.
 // Component .scss files never need it — custom properties resolve at runtime and
@@ -11,13 +18,13 @@
   --color-bg: #fff;
   --color-border: rgba(128, 128, 128, 0.3);
 
-  color-scheme: light dark;
-}
+  // The one colour on an otherwise black-and-white site: a muted red for the
+  // headings inside the navbar panels. Desaturated on purpose — it should read
+  // as a warm accent, not as a signal.
+  --color-accent: #8f4a45;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text: #9ca3af;
-    --color-heading: #f3f4f6;
-    --color-bg: #16171d;
-  }
+  // A single value, not `light dark`: the pair invites the browser to darken
+  // scrollbars and form controls to match the OS, which is the same automatic
+  // behaviour by another route.
+  color-scheme: light;
 }

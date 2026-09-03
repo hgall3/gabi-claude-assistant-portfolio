@@ -6,6 +6,7 @@
 // -synthesised fake bold, not the real cut.
 import '@fontsource/playfair-display/latin-600.css'
 import '@fontsource/playfair-display/latin-700.css'
+import '@fontsource/work-sans/latin-300.css'
 import '@fontsource/work-sans/latin-400.css'
 import '@fontsource/work-sans/latin-600.css'
 

@@ -8,6 +8,11 @@
 // width at which the desktop layout takes over — not a max for the mobile one.
 $bp-md: 1024px;
 
+// The width at which the navbar drops its full-screen panel for the desktop
+// row. Lower than $bp-md because four dropdown triggers fit comfortably on a
+// tablet, where nine flat links would not have.
+$bp-sm: 768px;
+
 $space: 24px;
 
 // Type families. Self-hosted via @fontsource; the imports live in App.jsx.
