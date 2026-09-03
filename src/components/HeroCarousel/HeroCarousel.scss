@@ -117,13 +117,31 @@
     }
   }
 
-  // Inverted against the page default: paper-coloured plate, ink-coloured text.
+  // Glass rather than a plate: the photograph reads through it, so the call to
+  // action sits in the image instead of on top of it. Text stays the hero's
+  // foreground — ink would lose against whatever is behind the button.
   &__button {
-    --button-bg: var(--hero-fg);
-    --button-fg: var(--hero-ink);
+    --button-bg: color-mix(in srgb, var(--hero-fg) 16%, transparent);
+    --button-fg: var(--hero-fg);
+    --button-bg-hover: color-mix(in srgb, var(--hero-fg) 30%, transparent);
 
     align-self: flex-start;
+    // 44px stays: this is the primary touch target on a phone, and below that
+    // size it starts getting mis-tapped. It reads smaller through lighter type,
+    // tighter padding and the glass.
+    min-height: 44px;
+    padding: 12px 22px;
     margin-top: 6px;
+    font-size: 0.5625rem; // 9px
+    border: 1px solid color-mix(in srgb, var(--hero-fg) 40%, transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    @media (min-width: v.$bp-sm) {
+      // No finger, so no minimum.
+      min-height: 40px;
+      padding: 12px 26px;
+    }
   }
 
   // ---- Controls -----------------------------------------------------------
@@ -185,25 +203,32 @@
     bottom: 26px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 8px;
     color: var(--hero-fg);
 
     @media (min-width: v.$bp-sm) {
       right: 56px;
       bottom: 44px;
+      gap: 14px;
     }
   }
 
   &__bars {
     display: flex;
-    gap: 8px;
+    gap: 5px;
+
+    @media (min-width: v.$bp-sm) {
+      gap: 8px;
+    }
   }
 
   // The bar is 2px tall; the button around it is 44px, so it can be tapped.
   &__bar {
     display: flex;
     align-items: center;
-    width: 22px;
+    // The visible mark shrinks on a phone; the 44px height it is wrapped in
+    // does not, so it stays tappable.
+    width: 12px;
     height: 44px;
     padding: 0;
     cursor: pointer;
@@ -222,13 +247,22 @@
     &.is-active::after {
       opacity: 1;
     }
+
+    @media (min-width: v.$bp-sm) {
+      width: 22px;
+    }
   }
 
   &__counter {
-    font-size: 0.59375rem; // 9.5px
+    font-size: 0.5rem; // 8px
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.12em;
     opacity: 0.6;
+
+    @media (min-width: v.$bp-sm) {
+      font-size: 0.59375rem; // 9.5px
+      letter-spacing: 0.18em;
+    }
   }
 
   :focus-visible {

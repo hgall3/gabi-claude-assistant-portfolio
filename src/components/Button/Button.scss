@@ -9,6 +9,10 @@
 .button {
   --button-bg: var(--color-heading);
   --button-fg: var(--color-bg);
+  // A separate property rather than a fixed mix of the one above: a solid
+  // button should soften on hover, but a translucent one has to firm up. Only
+  // the caller knows which it is.
+  --button-bg-hover: color-mix(in srgb, var(--button-bg) 88%, transparent);
 
   display: inline-flex;
   align-items: center;
@@ -29,6 +33,6 @@
   transition: background 0.25s;
 
   &:hover {
-    background: color-mix(in srgb, var(--button-bg) 88%, transparent);
+    background: var(--button-bg-hover);
   }
 }

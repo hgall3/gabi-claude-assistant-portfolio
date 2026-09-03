@@ -130,8 +130,21 @@ function HeroCarousel({ slides }) {
         if (touchX.current === null) return
 
         const travelled = event.changedTouches[0].clientX - touchX.current
-        if (Math.abs(travelled) > SWIPE) go(index + (travelled < 0 ? 1 : -1))
         touchX.current = null
+
+        if (Math.abs(travelled) > SWIPE) {
+          go(index + (travelled < 0 ? 1 : -1))
+          return
+        }
+
+        // Barely moved, so it was a tap rather than a swipe: advance. Only for
+        // touch — a click handler here would fire on desktop too, where the
+        // arrows already do this job.
+        //
+        // Taps that land on the button, an arrow or a progress bar are that
+        // control's own; without this check the call to action would navigate
+        // and change the slide in the same gesture.
+        if (!event.target.closest('a, button')) go(index + 1)
       }}
     >
       <div className="hero__frame" ref={frameRef}>
