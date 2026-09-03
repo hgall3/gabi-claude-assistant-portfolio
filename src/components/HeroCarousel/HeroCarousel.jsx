@@ -159,6 +159,7 @@ function HeroCarousel({ slides }) {
           >
             <img
               className="hero__photo"
+              style={{ '--slide-focus': item.mobileFocus }}
               src={item.src}
               srcSet={item.srcSet}
               sizes="100vw"

@@ -17,6 +17,11 @@ import camino1500 from '../assets/hero/camino-de-piedra-1500.jpg'
 // and a call to action this size must not land on a 404. When the page ships,
 // move the value across.
 //
+// `mobileFocus` shifts the crop on a phone, where a 3:2 photograph is squeezed
+// into a tall frame and the subject can fall out of view. It is an
+// `object-position` on the horizontal axis: below 50% the photo moves right,
+// above it moves left. Desktop is always centred.
+//
 // The copy here is editorial and deliberately separate from src/content/collections.jsx,
 // even where the words overlap: "Camino de Piedra" is a hero headline written for
 // this image, while the entry in `stories` is a title in a list. They are free to
@@ -45,8 +50,8 @@ export const heroSlides = [
     alt: 'Un burro cargado de ramas de flores amarillas camina por un sendero de tierra al atardecer, seguido de cerca por un perro claro.',
     breadcrumb: 'Libro Miradas',
     title: 'El Camino al Monte',
-    subtitle:
-      'Alrededores de Cuatro Esquinas en la provincia del Chimborazo',
+    subtitle: 'Alrededores de Cuatro Esquinas en la provincia del Chimborazo',
+    mobileFocus: '35%',
     action: {
       label: 'Ir al libro',
       to: '/libros',
@@ -61,6 +66,7 @@ export const heroSlides = [
     breadcrumb: 'Libro Miradas',
     title: 'Geografías del Alma',
     subtitle: 'Un Ecuador poco conocido y olvidado al compás del tiempo',
+    mobileFocus: '35%',
     action: {
       label: 'Ir al libro',
       to: '/libros',
@@ -86,7 +92,9 @@ export const heroSlides = [
     src: camino1500,
     srcSet: `${camino900} 900w, ${camino1500} 1500w`,
     alt: 'Camino empedrado que se interna entre agaves, cactus y un muro de piedra, con las montañas al fondo.',
+    breadcrumb: 'Libro Amnesia',
     title: 'Camino de Piedra',
+    mobileFocus: '65%',
     subtitle:
       'Collar de perlas de la tierra; ruta de antes y de siempre hilvanada con hilos de memoria por manos antiguas, endurecidas de viento, trabajo y campo.',
     action: {
