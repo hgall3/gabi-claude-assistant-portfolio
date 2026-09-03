@@ -1,8 +1,8 @@
 @use '../../styles/variables' as v;
 
 // Editorial navbar: black and white only. De-emphasis is opacity on the ink
-// colour, never a grey value, so it survives dark mode — where a fixed grey
-// would read as the wrong weight against the opposite background.
+// colour rather than a grey value, so it tracks the ink instead of being pinned
+// to a grey that the tokens know nothing about.
 
 // The bar and the panel share one background treatment.
 @mixin surface {
@@ -211,22 +211,13 @@
     gap: v.$space;
     padding: 16px v.$space 32px;
     overflow-y: auto;
-    // Inverted against the page: ink becomes the ground and back again. Written
-    // as the two existing tokens swapped rather than as literal black and white,
-    // so dark mode inverts with it.
-    color: var(--color-bg);
-    background: var(--color-heading);
+    // The same ground and ink as the page. The panel covers the whole screen, so
+    // anything else would read as a different site for as long as it is open.
+    color: var(--color-heading);
+    background: var(--color-bg);
 
     @media (min-width: v.$bp-sm) {
       display: none;
-    }
-
-    // Everything inside inherits the inverted ink — the signature included, which
-    // is why it needs no dark-mode handling of its own. The accent is the
-    // exception: it stays the accent.
-    .navbar__brand,
-    .navbar__item {
-      color: inherit;
     }
 
     // Panel type is set for a dense dropdown; on a full screen it has to be
@@ -238,9 +229,7 @@
     }
 
     // The way out of the section, not another title in it — carried by weight
-    // rather than colour. It keeps the inherited ink, which is white against the
-    // inverted panel and correctly becomes dark when the panel inverts the other
-    // way in dark mode. 600 is the heaviest Work Sans weight loaded; 700 would
+    // rather than colour. 600 is the heaviest Work Sans weight loaded; 700 would
     // be a browser-synthesised fake.
     .navbar__item--all {
       font-weight: 600;
@@ -261,7 +250,8 @@
   }
 
   &__accordion {
-    border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 15%, transparent);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-heading) 15%, transparent);
   }
 
   &__accordion-trigger {
