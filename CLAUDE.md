@@ -150,8 +150,7 @@ to menu labels and shows titles alone.
 The signature wordmark is `components/Signature/`, an inlined `<svg>` rather than
 an `<img>`. That is deliberate: an external image can't inherit CSS, so
 `fill: currentColor` only works inline. It means the mark takes the colour of
-whatever contains it — ink on the page, light against the inverted mobile panel —
-with no filter and no second file. Do the same for any future mark that has to follow the
+whatever contains it, with no filter and no second file. Do the same for any future mark that has to follow the
 theme.
 
 ## Page metadata

@@ -4,8 +4,7 @@ import './Signature.scss'
 //
 // It is inlined rather than loaded through <img> for one reason: an external
 // image can't inherit CSS. Inline, `fill: currentColor` means the mark simply
-// takes the colour of whatever it sits in — ink on the page, and light against
-// the inverted mobile panel — with no second asset and no filter.
+// takes the colour of whatever it sits in, with no second asset and no filter.
 //
 // The accessible name is set here rather than taken from the file, which carried
 // the accented spelling; the project writes the name as Perez throughout.
