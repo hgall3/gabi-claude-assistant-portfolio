@@ -39,8 +39,8 @@ easy to get wrong:
   at build time and emit no CSS, so any number of component files can `@use` it
   for free.
 - **`_theme.scss`** holds design tokens as CSS custom properties, so they can
-  respond to dark mode — Sass variables can't, since they're gone before any
-  media query runs. This file **emits CSS**, so it must be used exactly once:
+  be swapped at runtime — Sass variables can't, since they're resolved at build
+  time and gone before the page runs. This file **emits CSS**, so it must be used exactly once:
   only `main.scss` pulls it in.
 
 Component `.scss` files must never `@use 'theme'` — that would duplicate the
@@ -75,13 +75,20 @@ Layout is **mobile-first**: breakpoints are only ever used with `min-width`, so
 `$bp-md: 1024px` is the width at which the desktop layout takes over, not a
 ceiling for the mobile one.
 
-Dark mode comes from `prefers-color-scheme` in `_theme.scss`. Any new color token
-needs a value in both the `:root` block and the dark media query.
+**The site does not follow the visitor's OS appearance setting.** There is no
+`prefers-color-scheme` block and none should be added: everyone sees the same
+appearance whatever their device or the time of day. `color-scheme` is set to a
+single value for the same reason, since the pair lets the browser darken
+scrollbars and form controls on its own.
 
-**Planned, not yet built:** a manual light/dark toggle will be added, so the theme
-will eventually come from an explicit user choice as well as the OS setting. Keep
-new color work expressed as custom properties in `_theme.scss` rather than
-hardcoded values, so the toggle can swap them later without touching components.
+This is not a reason to hardcode colours. They stay custom properties in
+`_theme.scss`, because those are exactly what a toggle would swap — there is
+simply one set of values rather than a second set behind a media query.
+
+**Possible, not planned:** a manual light/dark toggle, chosen by the visitor. It
+may never be built, so don't design around it — but keep new colour work as
+custom properties in `_theme.scss` rather than hardcoded values, which is worth
+doing on its own and would make such a toggle cheap if it ever happens.
 A broader visual design direction is also still to come — the current styling is a
 working baseline, not a finished system.
 
@@ -143,9 +150,8 @@ to menu labels and shows titles alone.
 The signature wordmark is `components/Signature/`, an inlined `<svg>` rather than
 an `<img>`. That is deliberate: an external image can't inherit CSS, so
 `fill: currentColor` only works inline. It means the mark takes the colour of
-whatever contains it — ink on the light page, white in dark mode, flipped again
-inside the inverted mobile panel — with no filter, no second file and no
-theme-specific token. Do the same for any future mark that has to follow the
+whatever contains it — ink on the page, light against the inverted mobile panel —
+with no filter and no second file. Do the same for any future mark that has to follow the
 theme.
 
 ## Page metadata

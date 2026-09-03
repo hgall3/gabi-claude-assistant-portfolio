@@ -1,8 +1,8 @@
 @use '../../styles/variables' as v;
 
 // Editorial navbar: black and white only. De-emphasis is opacity on the ink
-// colour, never a grey value, so it survives dark mode — where a fixed grey
-// would read as the wrong weight against the opposite background.
+// colour rather than a grey value, so it holds against whatever ground it is on
+// — including the mobile panel, which inverts the palette.
 
 // The bar and the panel share one background treatment.
 @mixin surface {
@@ -213,7 +213,7 @@
     overflow-y: auto;
     // Inverted against the page: ink becomes the ground and back again. Written
     // as the two existing tokens swapped rather than as literal black and white,
-    // so dark mode inverts with it.
+    // so it follows the tokens if their values ever change.
     color: var(--color-bg);
     background: var(--color-heading);
 
@@ -238,10 +238,9 @@
     }
 
     // The way out of the section, not another title in it — carried by weight
-    // rather than colour. It keeps the inherited ink, which is white against the
-    // inverted panel and correctly becomes dark when the panel inverts the other
-    // way in dark mode. 600 is the heaviest Work Sans weight loaded; 700 would
-    // be a browser-synthesised fake.
+    // rather than colour, so it keeps the inherited ink of the inverted panel.
+    // 600 is the heaviest Work Sans weight loaded; 700 would be a
+    // browser-synthesised fake.
     .navbar__item--all {
       font-weight: 600;
     }
